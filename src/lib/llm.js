@@ -103,7 +103,7 @@ async function listAnthropicModels(apiKey) {
   }
 }
 
-async function streamAnthropic({ apiKey, model, system, messages, onText, signal, deep }) {
+async function streamAnthropic({ apiKey, model, system, messages, onText, signal, deep, effort }) {
   const client = anthropicClient(apiKey);
   const convo = messages.map((m) => ({ role: m.role, content: m.content }));
   const params = {
@@ -113,7 +113,7 @@ async function streamAnthropic({ apiKey, model, system, messages, onText, signal
   };
   if (isClaude5(model)) {
     // Thinking is adaptive by default on Claude 5 models; effort controls depth.
-    params.output_config = { effort: deep ? "medium" : "low" };
+    params.output_config = { effort: effort || (deep ? "medium" : "low") };
   }
   if (supportsFallbacks(model)) {
     params.betas = ["server-side-fallback-2026-07-01"];

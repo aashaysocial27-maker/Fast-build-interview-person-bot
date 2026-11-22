@@ -1,6 +1,7 @@
 import { ROLE_LIST } from "../data/roles.js";
 
 const NAV = [
+  { id: "series", label: "Question series", icon: "🎓" },
   { id: "chat", label: "Practice chat", icon: "💬" },
   { id: "bank", label: "Question bank", icon: "📚" },
   { id: "saved", label: "Saved questions", icon: "⭐" },

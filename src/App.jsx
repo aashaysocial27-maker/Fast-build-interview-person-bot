@@ -3,6 +3,7 @@ import Login from "./components/Login.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Chat from "./components/Chat.jsx";
 import QuestionBank from "./components/QuestionBank.jsx";
+import Series from "./components/Series.jsx";
 import Saved from "./components/Saved.jsx";
 import Notes from "./components/Notes.jsx";
 import DeepDive from "./components/DeepDive.jsx";
@@ -33,7 +34,7 @@ export default function App() {
   );
 }
 
-const EMPTY_CHATS = { pm: [], fde: [], eng: [] };
+const EMPTY_CHATS = { pm: [], gpm: [], fde: [], eng: [] };
 
 function Workspace({ session, updateSession, onLogout }) {
   const u = session.name;
@@ -43,6 +44,8 @@ function Workspace({ session, updateSession, onLogout }) {
   const [saved, setSaved] = usePersistentState(userKey(u, "saved"), []);
   const [notes, setNotes] = usePersistentState(userKey(u, "notes"), []);
   const [dives, setDives] = usePersistentState(userKey(u, "dives"), {});
+  const [attempts, setAttempts] = usePersistentState(userKey(u, "attempts"), {});
+  const [seriesModule, setSeriesModule] = useState(null);
   const [activeNoteId, setActiveNoteId] = useState(null);
   const [dive, setDive] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
@@ -205,6 +208,20 @@ function Workspace({ session, updateSession, onLogout }) {
               notify={notify}
               pendingPrompt={pendingPrompt?.roleId === roleId ? pendingPrompt : null}
               clearPending={() => setPendingPrompt(null)}
+            />
+          )}
+          {view === "series" && (
+            <Series
+              role={role}
+              ai={ai}
+              attempts={attempts}
+              setAttempts={setAttempts}
+              moduleId={seriesModule?.startsWith(roleId + "-") ? seriesModule : null}
+              setModuleId={setSeriesModule}
+              onSave={saveQuestion}
+              onDeepDive={openDeepDive}
+              onAddNote={createNote}
+              isSaved={isSaved}
             />
           )}
           {view === "bank" && (

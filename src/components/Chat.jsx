@@ -4,6 +4,7 @@ import { streamChat } from "../lib/llm.js";
 import { coachSystemPrompt, QUICK_PROMPTS } from "../lib/prompts.js";
 import { extractQuestion } from "../lib/text.js";
 import { uid } from "../lib/storage.js";
+import { useSpeech } from "../lib/speech.js";
 
 export default function Chat({ role, ai, userName, messages, setMessages, onSave, onDeepDive, onAddNote, notify, pendingPrompt, clearPending }) {
   const [input, setInput] = useState("");
@@ -11,6 +12,25 @@ export default function Chat({ role, ai, userName, messages, setMessages, onSave
   const abortRef = useRef(null);
   const listRef = useRef(null);
   const taRef = useRef(null);
+  const speech = useSpeech();
+  const dictBaseRef = useRef("");
+
+  // Live dictation: whatever was typed before + what's being said.
+  useEffect(() => {
+    if (!speech.listening && !speech.transcript) return;
+    const spoken = [speech.transcript, speech.interim].filter(Boolean).join(" ");
+    setInput([dictBaseRef.current, spoken].filter(Boolean).join(" "));
+  }, [speech.transcript, speech.interim, speech.listening]);
+
+  function toggleMic() {
+    if (speech.listening) {
+      speech.stop();
+      return;
+    }
+    speech.reset();
+    dictBaseRef.current = input.trim();
+    speech.start();
+  }
 
   useEffect(() => {
     const el = listRef.current;
@@ -34,6 +54,9 @@ export default function Chat({ role, ai, userName, messages, setMessages, onSave
   async function send(text) {
     const content = (text ?? input).trim();
     if (!content || busy) return;
+    if (speech.listening) speech.stop();
+    speech.reset();
+    dictBaseRef.current = "";
     setInput("");
     const userMsg = { id: uid(), role: "user", content };
     const botId = uid();
@@ -176,7 +199,8 @@ export default function Chat({ role, ai, userName, messages, setMessages, onSave
             </button>
           )}
         </div>
-        <div className="composer card">
+        {speech.error && <div className="alert error">{speech.error}</div>}
+        <div className={`composer card ${speech.listening ? "dictating" : ""}`}>
           <textarea
             ref={taRef}
             value={input}
@@ -185,6 +209,17 @@ export default function Chat({ role, ai, userName, messages, setMessages, onSave
             placeholder={`Answer a question, or ask anything about ${role.short} interviews…  (Enter to send, Shift+Enter for a new line)`}
             rows={2}
           />
+          {speech.supported && (
+            <button
+              className={`mic-mini ${speech.listening ? "on" : ""}`}
+              onClick={toggleMic}
+              disabled={busy}
+              title={speech.listening ? "Stop dictation" : "Answer by voice"}
+              aria-label={speech.listening ? "Stop dictation" : "Answer by voice"}
+            >
+              {speech.listening ? "■" : "🎙️"}
+            </button>
+          )}
           {busy ? (
             <button className="secondary" onClick={() => abortRef.current?.abort()}>
               ■ Stop
