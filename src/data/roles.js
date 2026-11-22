@@ -1,0 +1,131 @@
+// Role definitions, curated question banks and trusted learning resources.
+// Edit this file to add roles, questions or links.
+
+export const ROLES = {
+  pm: {
+    id: "pm",
+    name: "AI Product Manager",
+    short: "AI PM",
+    emoji: "🧭",
+    color: "#7c6cf2",
+    tagline: "Strategy, user value, metrics and shipping AI responsibly.",
+    focus: [
+      "Product sense for AI features (when to use AI vs. rules)",
+      "Defining success metrics, evals and guardrails for LLM features",
+      "Trade-offs: quality vs. latency vs. cost, build vs. buy, model selection",
+      "Responsible AI, safety, privacy and trust",
+      "Go-to-market, pricing and stakeholder communication",
+    ],
+    categories: ["Product sense", "Metrics & evals", "Strategy", "Responsible AI", "Behavioral"],
+    questions: [
+      { q: "How would you decide whether a product problem should be solved with an LLM, classical ML, or plain rules?", cat: "Product sense", level: "Core" },
+      { q: "Design an AI writing assistant for university students. Who are the users, what are the key features, and how do you measure success?", cat: "Product sense", level: "Core" },
+      { q: "Your LLM-powered support bot has high usage but CSAT dropped 8%. How do you investigate?", cat: "Metrics & evals", level: "Advanced" },
+      { q: "How would you build an evaluation plan before launching a generative AI feature?", cat: "Metrics & evals", level: "Core" },
+      { q: "What online and offline metrics would you track for an AI code-completion product?", cat: "Metrics & evals", level: "Core" },
+      { q: "A cheaper model is 40% less expensive but 5% worse on your evals. Do you switch? Walk me through the decision.", cat: "Strategy", level: "Advanced" },
+      { q: "Should we fine-tune our own model, use RAG, or just prompt a frontier model? How do you decide?", cat: "Strategy", level: "Advanced" },
+      { q: "How would you price an AI feature whose cost scales with tokens used?", cat: "Strategy", level: "Advanced" },
+      { q: "How do you handle hallucinations in a customer-facing AI product?", cat: "Responsible AI", level: "Core" },
+      { q: "What guardrails would you put on an AI agent that can take actions on a user's behalf (send emails, make purchases)?", cat: "Responsible AI", level: "Advanced" },
+      { q: "Tell me about a time you had to explain a technical limitation to non-technical stakeholders.", cat: "Behavioral", level: "Core" },
+      { q: "Tell me about a product decision you made with incomplete data.", cat: "Behavioral", level: "Core" },
+    ],
+    resources: [
+      { title: "People + AI Guidebook (Google PAIR)", url: "https://pair.withgoogle.com/guidebook/" },
+      { title: "Building effective agents (Anthropic)", url: "https://www.anthropic.com/engineering/building-effective-agents" },
+      { title: "Rules of Machine Learning (Google)", url: "https://developers.google.com/machine-learning/guides/rules-of-ml" },
+      { title: "Guidelines for Human-AI Interaction (Microsoft HAX)", url: "https://www.microsoft.com/en-us/haxtoolkit/ai-guidelines/" },
+      { title: "Chip Huyen's blog — building LLM applications", url: "https://huyenchip.com/blog/" },
+      { title: "Your AI product needs evals (Hamel Husain)", url: "https://hamel.dev/blog/posts/evals/" },
+    ],
+  },
+
+  fde: {
+    id: "fde",
+    name: "AI Forward Deployed Engineer",
+    short: "AI FDE",
+    emoji: "🚀",
+    color: "#f08a5d",
+    tagline: "Customer-facing builder: scope, prototype and deploy AI in the real world.",
+    focus: [
+      "Discovery: turning a fuzzy customer problem into a scoped AI solution",
+      "Rapid prototyping with LLM APIs, RAG and agents",
+      "Integration with enterprise systems, data, auth and security reviews",
+      "Debugging production issues and measuring impact with customers",
+      "Communication, demos and handling difficult stakeholders",
+    ],
+    categories: ["Discovery", "Solution design", "Debugging", "Integration", "Behavioral"],
+    questions: [
+      { q: "A bank wants 'an AI assistant for their analysts'. Walk me through your first two weeks on site.", cat: "Discovery", level: "Core" },
+      { q: "How do you decide what to build in a 2-week proof of concept vs. what to leave out?", cat: "Discovery", level: "Core" },
+      { q: "Design a RAG system over 2 million internal PDFs with strict document-level permissions.", cat: "Solution design", level: "Advanced" },
+      { q: "A customer wants an agent that automates invoice processing end-to-end. How would you architect it and keep a human in the loop?", cat: "Solution design", level: "Advanced" },
+      { q: "The customer says 'the model gives wrong answers'. How do you debug that systematically?", cat: "Debugging", level: "Core" },
+      { q: "Latency of your deployed assistant jumped from 3s to 15s. What do you check?", cat: "Debugging", level: "Advanced" },
+      { q: "How would you integrate an LLM into a system that runs in a customer's VPC with no internet egress?", cat: "Integration", level: "Advanced" },
+      { q: "What do you bring to a customer's security review for an LLM deployment?", cat: "Integration", level: "Core" },
+      { q: "Live-code: write a function that calls an LLM API with retries, timeouts and structured JSON output.", cat: "Integration", level: "Core" },
+      { q: "Tell me about a time a customer's requirements changed mid-project. What did you do?", cat: "Behavioral", level: "Core" },
+      { q: "How do you say no to a customer request without damaging the relationship?", cat: "Behavioral", level: "Core" },
+    ],
+    resources: [
+      { title: "Claude developer docs", url: "https://platform.claude.com/docs" },
+      { title: "Building effective agents (Anthropic)", url: "https://www.anthropic.com/engineering/building-effective-agents" },
+      { title: "Anthropic cookbooks (GitHub)", url: "https://github.com/anthropics/anthropic-cookbook" },
+      { title: "OpenAI Cookbook", url: "https://cookbook.openai.com/" },
+      { title: "What is RAG? (Pinecone Learn)", url: "https://www.pinecone.io/learn/retrieval-augmented-generation/" },
+      { title: "Patterns for building LLM systems (Eugene Yan)", url: "https://eugeneyan.com/writing/llm-patterns/" },
+    ],
+  },
+
+  eng: {
+    id: "eng",
+    name: "AI Engineer",
+    short: "AI Engineer",
+    emoji: "🧠",
+    color: "#36b9a8",
+    tagline: "LLM fundamentals, system design, evals and production engineering.",
+    focus: [
+      "Transformer and LLM fundamentals (attention, tokenization, sampling)",
+      "RAG, embeddings, vector search and agents/tool use",
+      "Fine-tuning, evaluation and prompt engineering",
+      "Serving, latency, cost optimization and caching",
+      "ML system design and coding",
+    ],
+    categories: ["Fundamentals", "RAG & agents", "Training & evals", "Systems", "Coding"],
+    questions: [
+      { q: "Explain self-attention to a new grad. Why does it scale quadratically with sequence length?", cat: "Fundamentals", level: "Core" },
+      { q: "What is tokenization and how does it affect cost, latency and model behavior?", cat: "Fundamentals", level: "Core" },
+      { q: "Explain temperature, top-p and top-k sampling. When would you change them?", cat: "Fundamentals", level: "Core" },
+      { q: "Design a retrieval-augmented generation pipeline. How do you choose chunk size and evaluate retrieval quality?", cat: "RAG & agents", level: "Core" },
+      { q: "What's the difference between a workflow and an agent? When should you use each?", cat: "RAG & agents", level: "Core" },
+      { q: "How does tool use / function calling work under the hood?", cat: "RAG & agents", level: "Advanced" },
+      { q: "When would you fine-tune (full, LoRA) instead of using prompting or RAG?", cat: "Training & evals", level: "Advanced" },
+      { q: "How do you build an evaluation suite for an LLM feature? Discuss LLM-as-judge pitfalls.", cat: "Training & evals", level: "Advanced" },
+      { q: "How would you reduce latency and cost for a high-traffic LLM endpoint?", cat: "Systems", level: "Advanced" },
+      { q: "Design a system that serves a chatbot to 1M daily users with streaming responses.", cat: "Systems", level: "Advanced" },
+      { q: "Implement cosine similarity search over embeddings and return the top-k results.", cat: "Coding", level: "Core" },
+      { q: "Write a token-bucket rate limiter for calls to an LLM API.", cat: "Coding", level: "Core" },
+    ],
+    resources: [
+      { title: "Attention Is All You Need (paper)", url: "https://arxiv.org/abs/1706.03762" },
+      { title: "Neural Networks: Zero to Hero (Andrej Karpathy)", url: "https://karpathy.ai/zero-to-hero.html" },
+      { title: "Hugging Face Learn (LLM & NLP courses)", url: "https://huggingface.co/learn" },
+      { title: "Lil'Log — Lilian Weng's research notes", url: "https://lilianweng.github.io/" },
+      { title: "Patterns for building LLM systems (Eugene Yan)", url: "https://eugeneyan.com/writing/llm-patterns/" },
+      { title: "Claude prompt engineering guide", url: "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview" },
+    ],
+  },
+};
+
+export const ROLE_LIST = Object.values(ROLES);
+
+export function searchLinks(topic) {
+  const q = encodeURIComponent(topic);
+  return [
+    { title: "Search the web", url: `https://www.google.com/search?q=${q}` },
+    { title: "Watch explainers on YouTube", url: `https://www.youtube.com/results?search_query=${q}` },
+    { title: "Find research on arXiv", url: `https://arxiv.org/search/?query=${q}&searchtype=all` },
+  ];
+}
