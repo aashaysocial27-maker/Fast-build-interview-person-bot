@@ -11,11 +11,15 @@ Built with **Vite + React (JavaScript)**. No backend: users sign in with their o
 
 ## Features
 
-- **🎓 Question series.** Each role has 3 modules of 3 questions each (36 in total). Every question comes with a hint, a written **model answer** and the **key points** interviewers listen for.
+- **🎓 Question series.** Each role has 5 modules of 4 real interview questions each (80 in total). Every question comes with a hint, a written **model answer** and the **key points** interviewers listen for.
   - **🎙️ Voice evaluator.** Answer out loud. Your browser transcribes the answer live, and you can edit the transcript before submitting.
   - **Scoring.** The AI evaluator gives an overall score out of 10, a hire verdict and four sub-scores (content, structure, communication, depth). It lists which key points you covered and which you missed, gives strengths and improvements, rewrites your answer in an improved form, and suggests a likely follow-up question.
   - **Delivery metrics,** computed locally: duration, speaking pace in words per minute, and filler words ("um", "like", "you know"…).
   - **Progress.** The model answer stays hidden until you've tried the question. You can have the question read aloud, and your attempt history and best score are tracked for each question and module.
+- **🔊 Listen and learn.** Every chat reply, model answer, deep dive, saved answer and note has a Listen button. You can also play a whole module (each question followed by its model answer).
+  - A player bar at the bottom has play/pause, previous/next sentence and stop.
+  - **📜 Follow along:** a transcript highlights the sentence being read; click any sentence to jump to it.
+  - **⚙️ Voice settings:** pick a voice (natural ones marked ✨), set the speed from 0.6× to 1.8×, and turn on **Teacher style** for spoken cues ("First…", "Next up…") and longer pauses.
 - **Sign in with an API key.** Choose from four providers: **Claude (recommended)**, ChatGPT (OpenAI), Gemini (Google) or Llama (Groq). The key is checked by listing the provider's models, and the model picker is filled from that list. You can connect more providers and switch between them later in ⚙️ Settings.
 - **Practice chat** for each role, with a 🎙️ button for dictating answers. The coach asks realistic questions, scores your answer out of 10, points out what you missed, sketches a model answer and asks follow-ups. Quick prompts cover random, hard and behavioral questions, a 2‑week study plan and key concepts.
 - **🔍 Deep dive** on any question. You get a full study guide: what the interviewer is testing, a 60‑second answer, the full answer, a worked example, common mistakes and likely follow-ups, plus **links**:
@@ -72,7 +76,9 @@ src/
   App.jsx                 app shell, state, save/notes/deep-dive actions
   data/roles.js           roles, question banks, curated resources  ← edit to add content
   data/series.js          question series: modules, model answers, key points
+  data/extra/*.js         additional real interview questions per role
   lib/speech.js           microphone speech-to-text + delivery metrics
+  lib/narrator.js         read-aloud engine (Markdown → spoken sentences, global player)
   lib/evaluate.js         AI answer evaluator (rubric-based JSON scoring)
   lib/providers.js        the four providers and their default models
   lib/llm.js              streaming client for Claude (Anthropic SDK), OpenAI, Gemini, Groq

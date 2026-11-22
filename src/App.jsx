@@ -8,6 +8,8 @@ import Saved from "./components/Saved.jsx";
 import Notes from "./components/Notes.jsx";
 import DeepDive from "./components/DeepDive.jsx";
 import Settings from "./components/Settings.jsx";
+import NarratorBar from "./components/NarratorBar.jsx";
+import { narrator } from "./lib/narrator.js";
 import { ROLES } from "./data/roles.js";
 import { PROVIDERS } from "./lib/providers.js";
 import { clearSession, loadSession, saveSession, uid, userKey, usePersistentState } from "./lib/storage.js";
@@ -27,6 +29,7 @@ export default function App() {
       session={session}
       updateSession={updateSession}
       onLogout={() => {
+        narrator.stop();
         clearSession();
         setSession(null);
       }}
@@ -250,6 +253,8 @@ function Workspace({ session, updateSession, onLogout }) {
       )}
 
       {showSettings && <Settings session={session} onChange={updateSession} onClose={() => setShowSettings(false)} />}
+
+      <NarratorBar />
 
       {toast && (
         <div className="toast" role="status">

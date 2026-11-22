@@ -4,6 +4,7 @@ import { streamChat } from "../lib/llm.js";
 import { deepDiveSystemPrompt } from "../lib/prompts.js";
 import { ROLES, searchLinks } from "../data/roles.js";
 import { PROVIDERS } from "../lib/providers.js";
+import ListenButton from "./ListenButton.jsx";
 
 export const diveKey = (roleId, question) => `${roleId}::${question.trim().toLowerCase()}`;
 
@@ -87,6 +88,14 @@ export default function DeepDive({ dive, ai, cache, setCache, onClose, onSave, o
             <button className="secondary" onClick={() => onPractice(dive.question, dive.roleId)}>
               🎤 Practice in chat
             </button>
+            <ListenButton
+              id={`dive-${key}`}
+              title={`Deep dive: ${dive.question}`}
+              markdown={text}
+              intro={`Deep dive. ${dive.question}`}
+              label="Read aloud"
+              disabled={!text || state === "loading"}
+            />
             <button className="ghost" disabled={state === "loading"} onClick={generate}>
               ↻ Regenerate
             </button>

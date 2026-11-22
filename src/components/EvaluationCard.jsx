@@ -1,4 +1,5 @@
 import { paceLabel } from "../lib/speech.js";
+import ListenButton from "./ListenButton.jsx";
 
 const LABELS = { content: "Content", structure: "Structure", communication: "Communication", depth: "Depth" };
 
@@ -120,6 +121,9 @@ export default function EvaluationCard({ evaluation: ev, metrics }) {
       {ev.improvedAnswer && (
         <details className="answer-box">
           <summary>✍️ Your answer, improved</summary>
+          <div className="box-actions">
+            <ListenButton id={`improved-${ev.improvedAnswer.length}-${ev.overall}`} title="Your answer, improved" markdown={ev.improvedAnswer} label="Listen" />
+          </div>
           <p className="improved">{ev.improvedAnswer}</p>
         </details>
       )}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Markdown from "./Markdown.jsx";
 import { ROLES, ROLE_LIST } from "../data/roles.js";
 import { timeAgo } from "../lib/text.js";
+import ListenButton from "./ListenButton.jsx";
 
 export default function Notes({ notes, setNotes, activeId, setActiveId, createNote, currentRoleId }) {
   const [query, setQuery] = useState("");
@@ -84,6 +85,7 @@ export default function Notes({ notes, setNotes, activeId, setActiveId, createNo
                   👀 Preview
                 </button>
               </div>
+              <ListenButton id={`note-${active.id}`} title={active.title || "Note"} markdown={active.body} intro={active.title} disabled={!active.body.trim()} />
               <span className="grow" />
               <span className="muted tiny">Saved {timeAgo(active.updatedAt)}</span>
               <button className="ghost small" onClick={download} title="Download as Markdown">

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Markdown from "./Markdown.jsx";
 import { ROLES, ROLE_LIST } from "../data/roles.js";
 import { timeAgo } from "../lib/text.js";
+import ListenButton from "./ListenButton.jsx";
 
 const STATUS = [
   { id: "todo", label: "To practice", icon: "🌱" },
@@ -120,6 +121,9 @@ export default function Saved({ saved, setSaved, onDeepDive, onPractice, onAddNo
                     {s.answer ? (
                       <details className="answer-box" open>
                         <summary>📖 Saved deep-dive answer</summary>
+                        <div className="box-actions">
+                          <ListenButton id={`saved-${s.id}`} title={s.question} markdown={s.answer} intro={`Question. ${s.question}`} label="Listen to answer" />
+                        </div>
                         <Markdown>{s.answer}</Markdown>
                         {s.sources?.length > 0 && (
                           <div className="link-group">

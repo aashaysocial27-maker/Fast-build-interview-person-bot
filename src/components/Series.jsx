@@ -4,7 +4,7 @@ import AnswerRecorder from "./AnswerRecorder.jsx";
 import EvaluationCard from "./EvaluationCard.jsx";
 import { seriesFor } from "../data/series.js";
 import { evaluateAnswer } from "../lib/evaluate.js";
-import { speak } from "../lib/speech.js";
+import ListenButton from "./ListenButton.jsx";
 import { timeAgo } from "../lib/text.js";
 
 const best = (list) => (list?.length ? Math.max(...list.map((a) => a.eval?.overall ?? 0)) : null);
@@ -170,6 +170,16 @@ function ModuleView({ role, mod, ai, attempts, setAttempts, onBack, onSave, onDe
             {mod.emoji} {mod.title}
           </h2>
         </div>
+        <ListenButton
+          id={`mod-${mod.id}`}
+          title={`${mod.title} — listen & learn`}
+          parts={mod.questions.flatMap((x, i) => [
+            { intro: `Question ${i + 1} of ${mod.questions.length}. ${x.q} Think about how you'd answer. Here's a model answer.`, markdown: x.modelAnswer },
+          ])}
+          intro={mod.title}
+          label="Play whole module"
+          className="big"
+        />
       </div>
 
       <div className="stepper" style={{ "--rc": role.color }}>
@@ -191,9 +201,7 @@ function ModuleView({ role, mod, ai, attempts, setAttempts, onBack, onSave, onDe
             Question {idx + 1} of {mod.questions.length}
           </span>
           <span className="grow" />
-          <button className="ghost small" onClick={() => speak(q.q)} title="Hear the question like in a real interview">
-            🔊 Read aloud
-          </button>
+          <ListenButton id={`q-${q.id}`} title={`Question ${idx + 1}`} markdown={q.q} intro={`Question ${idx + 1}.`} label="Read aloud" />
           <button
             className={`icon-btn star ${isSaved(q.q, role.id) ? "on" : ""}`}
             title="Save question"
@@ -229,6 +237,17 @@ function ModuleView({ role, mod, ai, attempts, setAttempts, onBack, onSave, onDe
         <div className="ma-head">
           <h3>📘 Model answer</h3>
           <span className="grow" />
+          {reveal && (
+            <ListenButton
+              id={`ma-${q.id}`}
+              title={`Model answer · Q${idx + 1}`}
+              parts={[
+                { intro: `Question ${idx + 1}. ${q.q} Here's a model answer.`, markdown: q.modelAnswer },
+                { intro: "Now, the key points interviewers listen for.", markdown: q.keyPoints.map((k) => `- ${k}`).join("\n") },
+              ]}
+              label="Listen to model answer"
+            />
+          )}
           {!reveal && (
             <button className="secondary small" onClick={() => setReveal(true)}>
               {history.length ? "Show model answer" : "Reveal anyway"}

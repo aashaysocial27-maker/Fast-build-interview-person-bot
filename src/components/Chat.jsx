@@ -5,6 +5,7 @@ import { coachSystemPrompt, QUICK_PROMPTS } from "../lib/prompts.js";
 import { extractQuestion } from "../lib/text.js";
 import { uid } from "../lib/storage.js";
 import { useSpeech } from "../lib/speech.js";
+import ListenButton from "./ListenButton.jsx";
 
 export default function Chat({ role, ai, userName, messages, setMessages, onSave, onDeepDive, onAddNote, notify, pendingPrompt, clearPending }) {
   const [input, setInput] = useState("");
@@ -155,6 +156,7 @@ export default function Chat({ role, ai, userName, messages, setMessages, onSave
                 )}
                 {m.role === "assistant" && !m.pending && !m.error && m.content && (
                   <div className="msg-actions">
+                    <ListenButton id={`chat-${m.id}`} title={`${role.short} coach`} markdown={m.content} label="Play" className="primary-listen" />
                     <button
                       onClick={() => {
                         const q = extractQuestion(m.content);

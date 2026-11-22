@@ -1033,6 +1033,19 @@ Bringing this proactively often cuts weeks off the review.`,
   ],
 };
 
+// Merge the additional real-interview questions and modules.
+import extraPm from "./extra/pm.js";
+import extraGpm from "./extra/gpm.js";
+import extraFde from "./extra/fde.js";
+import extraEng from "./extra/eng.js";
+
+for (const [roleId, extra] of Object.entries({ pm: extraPm, gpm: extraGpm, fde: extraFde, eng: extraEng })) {
+  for (const [moduleId, qs] of Object.entries(extra.add)) {
+    SERIES[roleId].find((m) => m.id === moduleId).questions.push(...qs);
+  }
+  SERIES[roleId].push(...extra.modules);
+}
+
 export const seriesFor = (roleId) => SERIES[roleId] || [];
 
 export function findSeriesQuestion(questionId) {
